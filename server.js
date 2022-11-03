@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const complaintsRouter = require("./routes/complaintRoutes");
 
 const app = express();
 dotenv.config();
@@ -22,6 +23,7 @@ mongoose.connect(URL, {
 });
 
 //routers
+app.use("/complaints", complaintsRouter);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
