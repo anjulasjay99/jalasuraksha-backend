@@ -34,7 +34,7 @@ router.route("/").post(async (req, res) => {
 
   //send response
   if (result) {
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, data: result });
   } else {
     res.status(400).json({ success: false });
   }

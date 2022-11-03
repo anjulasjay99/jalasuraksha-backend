@@ -13,6 +13,7 @@ const createComplaint = async (
   description
 ) => {
   let isSuccess = false;
+  let data;
   const complaintId = "CMP" + Date.now(); //creates a unique id for the complaint
   const dateOfComplaint = new Date().toISOString(); //create a timestamp
 
@@ -30,7 +31,13 @@ const createComplaint = async (
     description,
     status: "Pending",
     dateOfComplaint,
-    feedbacks: [],
+    feedbacks: [
+      /*  {
+        name: "Angela",
+        message: "Will look into this",
+        dateOfFeedback: "2022-11-03",
+      }, */
+    ],
   });
 
   //add complaint to the database
@@ -39,13 +46,14 @@ const createComplaint = async (
     .then((res) => {
       console.log(res);
       isSuccess = true;
+      data = res;
     })
     .catch((error) => {
       console.error(error);
       isSuccess = false;
     });
 
-  return isSuccess;
+  return isSuccess ? data : false;
 };
 
 //fetch all complaints made by a user
