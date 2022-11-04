@@ -2,6 +2,9 @@ const router = require("express").Router();
 const {
   createComplaint,
   getComplaintsByUser,
+  replyToComplaint,
+  resolveComplaint,
+  getFeedbacks,
 } = require("../utils/complaintsDBUtil");
 
 //route to create a new complaint
@@ -47,6 +50,46 @@ router.route("/:userEmail").get(async (req, res) => {
 
   //fetch complaints by user
   const result = await getComplaintsByUser(userEmail);
+
+  //send response
+  if (result) {
+    res.status(200).json({ success: true, data: result });
+  } else {
+    res.status(400).json({ success: false });
+  }
+});
+
+//reply to complaint/feedback
+router.route("/reply/:complaintId").post(async (req, res) => {
+  const complaintId = req.params.complaintId;
+  const { name, message } = req.body;
+  const result = await replyToComplaint(complaintId, name, message);
+
+  //send response
+  if (result) {
+    res.status(200).json({ success: true, data: result });
+  } else {
+    res.status(400).json({ success: false });
+  }
+});
+
+//resolve complaint
+router.route("/resolve/:complaintId").post(async (req, res) => {
+  const complaintId = req.params.complaintId;
+  const result = await resolveComplaint(complaintId);
+
+  //send response
+  if (result) {
+    res.status(200).json({ success: true, data: result });
+  } else {
+    res.status(400).json({ success: false });
+  }
+});
+
+//fetch feedbacks
+router.route("/feedbacks/:complaintId").get(async (req, res) => {
+  const complaintId = req.params.complaintId;
+  const result = await getFeedbacks(complaintId);
 
   //send response
   if (result) {
