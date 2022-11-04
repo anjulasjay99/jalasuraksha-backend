@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   createComplaint,
   getComplaintsByUser,
+  getAllComplaints
 } = require("../utils/complaintsDBUtil");
 
 //route to create a new complaint
@@ -53,6 +54,18 @@ router.route("/:userEmail").get(async (req, res) => {
     res.status(200).json({ success: true, data: result });
   } else {
     res.status(400).json({ success: false });
+  }
+});
+
+// Route to fetch all complaints
+
+router.route("/").get(async(req,res)=>{
+  const result = await getAllComplaints();
+
+  if(result){
+    res.status(200).json({ success : true , data: result});
+  } else {
+    res.status(400).json({success: false})
   }
 });
 
