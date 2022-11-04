@@ -100,3 +100,83 @@ const getAllComplaints = async() =>{
 };
 
 module.exports = { createComplaint, getComplaintsByUser, getAllComplaints };
+//reply to complaint/ feedback
+const replyToComplaint = async (complaintId, name, message) => {
+  let feedbacks = [];
+  let isSuccess = false;
+  let data;
+
+  //fetch by complaint id
+  await Complaint.find({ complaintId })
+    .then((res) => {
+      feedbacks = res[0].feedbacks;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  const reply = {
+    name,
+    message,
+    dateOfFeedback: new Date().toISOString(),
+  };
+
+  feedbacks.push(reply);
+
+  await Complaint.findOneAndUpdate({ complaintId }, { feedbacks })
+    .then((res) => {
+      isSuccess = true;
+      data = res;
+    })
+    .catch((error) => {
+      console.log(error);
+      isSuccess = false;
+    });
+
+  return isSuccess ? data : false;
+};
+
+//resolve complaint
+const resolveComplaint = async (complaintId) => {
+  let isSuccess = false;
+  let data;
+
+  await Complaint.findOneAndUpdate({ complaintId }, { status: "Resolved" })
+    .then((res) => {
+      isSuccess = true;
+      data = res;
+    })
+    .catch((error) => {
+      console.log(error);
+      isSuccess = false;
+    });
+
+  return isSuccess ? data : false;
+};
+
+//fetch all feedbacks by complaint id
+const getFeedbacks = async (complaintId) => {
+  let isSuccess = false;
+  let data = [];
+
+  await Complaint.find({ complaintId })
+    .then((res) => {
+      isSuccess = true;
+      data = res[0].feedbacks;
+    })
+    .catch((error) => {
+      console.log(error);
+      isSuccess = false;
+    });
+
+  return isSuccess ? data : false;
+};
+
+module.exports = {
+  createComplaint,
+  getComplaintsByUser,
+  getAllComplaints,
+  replyToComplaint,
+  resolveComplaint,
+  getFeedbacks,
+};
