@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   createComplaint,
   getComplaintsByUser,
+  getAllComplaints,
   replyToComplaint,
   resolveComplaint,
   getFeedbacks,
@@ -59,6 +60,17 @@ router.route("/:userEmail").get(async (req, res) => {
   }
 });
 
+// Route to fetch all complaints
+
+router.route("/").get(async(req,res)=>{
+  const result = await getAllComplaints();
+
+  if(result){
+    res.status(200).json({ success : true , data: result});
+  } else {
+    res.status(400).json({success: false})
+  }
+})
 //reply to complaint/feedback
 router.route("/reply/:complaintId").post(async (req, res) => {
   const complaintId = req.params.complaintId;

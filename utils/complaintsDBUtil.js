@@ -79,6 +79,27 @@ const getComplaintsByUser = async (userEmail) => {
   }
 };
 
+const getAllComplaints = async() =>{
+  let data = [];
+  let isSuccess = false;
+
+  await Complaint.find().then((res) =>{
+    data = res;
+    isSuccess = true;
+  }).catch((err) =>{
+    console.log(err);
+    isSuccess = false;
+  });
+
+  if(isSuccess){
+    return data;
+  }
+  else{
+    return false;
+  }
+};
+
+module.exports = { createComplaint, getComplaintsByUser, getAllComplaints };
 //reply to complaint/ feedback
 const replyToComplaint = async (complaintId, name, message) => {
   let feedbacks = [];
@@ -154,6 +175,7 @@ const getFeedbacks = async (complaintId) => {
 module.exports = {
   createComplaint,
   getComplaintsByUser,
+  getAllComplaints,
   replyToComplaint,
   resolveComplaint,
   getFeedbacks,
