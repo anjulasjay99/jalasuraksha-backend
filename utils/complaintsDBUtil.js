@@ -14,7 +14,7 @@ const createComplaint = async (
 ) => {
   let isSuccess = false;
   let data;
-  const complaintId = "CMP" + Date.now(); //creates a unique id for the complaint
+  const complaintId = "w" + Date.now(); //creates a unique id for the complaint
   const dateOfComplaint = new Date().toISOString(); //create a timestamp
 
   //create a new complaint object
