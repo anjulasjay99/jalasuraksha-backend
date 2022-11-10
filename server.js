@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const complaintsRouter = require("./routes/complaintRoutes");
-const donationRouter = require("./routes/DonationRoutes")
+const donationRouter = require("./routes/DonationRoutes");
+const healthRouter = require("./routes/healthRoutes");
 const app = express();
 dotenv.config();
 
@@ -24,7 +26,8 @@ mongoose.connect(URL, {
 
 //routers
 app.use("/complaints", complaintsRouter);
-app.use("/donations",donationRouter)
+app.use("/donations", donationRouter);
+app.use("/healthPosts", healthRouter);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
