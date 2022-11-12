@@ -172,6 +172,29 @@ const getFeedbacks = async (complaintId) => {
   return isSuccess ? data : false;
 };
 
+// Leave feedback for a complaint
+
+const leaveFeedback = async (complaintId , message) =>{
+  let isSuccess = false;
+  
+  const  fdbk = {
+    name : "",
+    message,
+    dateOfFeedback: new Date().toISOString()
+  }
+
+  await Complaint.updateOne({ complaintId } , { $push: { feedbacks : fdbk }}).then((res) =>{  
+    isSuccess = true;
+    data = res;
+  }).catch((err) =>{
+    console.log("Hi");
+    isSuccess = false;
+  })
+
+  return isSuccess ? data : false;
+
+}
+
 module.exports = {
   createComplaint,
   getComplaintsByUser,
@@ -179,4 +202,5 @@ module.exports = {
   replyToComplaint,
   resolveComplaint,
   getFeedbacks,
+  leaveFeedback
 };
