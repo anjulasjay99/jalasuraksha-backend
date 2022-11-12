@@ -10,7 +10,7 @@ const sessionSchema = new Schema({
   sessionCreatedAt: { type: Date, required: true },
   platform: { type: String, required: true },
   meetingLink: { type: String, required: true },
-  sessionDate: { type: Date, required: true },
+  sessionDate: { type: String, required: true },
   time: { type: String, required: true },
   conductors: { type: Date, required: true },
 });

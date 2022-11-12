@@ -44,7 +44,7 @@ router.route("/:userEmail").get(async (req, res) => {
   //read request params
   const userEmail = req.params.userEmail;
 
-  //fetch posts by user
+  //fetch session by user
   const result = await getSessionsByUser(userEmail);
 
   //send response
