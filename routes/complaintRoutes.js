@@ -6,6 +6,7 @@ const {
   replyToComplaint,
   resolveComplaint,
   getFeedbacks,
+  leaveFeedback
 } = require("../utils/complaintsDBUtil");
 
 //route to create a new complaint
@@ -107,6 +108,19 @@ router.route("/feedbacks/:complaintId").get(async (req, res) => {
   if (result) {
     res.status(200).json({ success: true, data: result });
   } else {
+    res.status(400).json({ success: false });
+  }
+});
+
+//Leave feedback
+router.route("/feedbacks/:complaintId").post(async(req, res) =>{
+  const complaintId = req.params.complaintId;
+  const { message } = req.body;
+  const result = await leaveFeedback(complaintId , message);
+  console.log(result);
+  if(result) {
+    res.status(200).json({ success : true , data : result });
+  } else{
     res.status(400).json({ success: false });
   }
 });
