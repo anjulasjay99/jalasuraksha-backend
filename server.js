@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const complaintsRouter = require("./routes/complaintRoutes");
 const donationRouter = require("./routes/DonationRoutes");
 const healthRouter = require("./routes/healthRoutes");
+const sessionRouter = require("./routes/healthSessionRoutes");
 const app = express();
 dotenv.config();
 
@@ -28,6 +29,7 @@ mongoose.connect(URL, {
 app.use("/complaints", complaintsRouter);
 app.use("/donations", donationRouter);
 app.use("/healthPosts", healthRouter);
+app.use("/healthSessions", sessionRouter);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
